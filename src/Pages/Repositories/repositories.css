@@ -28,6 +28,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  flex-direction: column;
 }
 
 .flex-display > * {
@@ -57,4 +58,8 @@ h4.ant-typography,
   background: #161b22 !important;
   border: #161b22 !important;
   color: #8b949e !important;
+}
+
+.ant-list-item-action-split {
+  display: none !important;
 }

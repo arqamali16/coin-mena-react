@@ -60,6 +60,7 @@ h4.ant-typography,
   color: #8b949e !important;
 }
 
-.ant-list-item-action-split {
+.ant-list-item-action-split,
+em {
   display: none !important;
 }

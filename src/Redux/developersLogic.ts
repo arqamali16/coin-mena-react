@@ -5,7 +5,7 @@ import { kea } from "kea";
 import axios from "axios";
 
 const DevelopersLogic = kea({
-  path: () => ["kea", "reposetories"],
+  path: () => ["kea", "developers"],
 
   defaults: {
     developers: [],
@@ -26,7 +26,7 @@ const DevelopersLogic = kea({
       loadDevelopers: () => true,
       setDevelopers: () => false,
     },
-    reposetories: [
+    developers: [
       {},
       {
         setDevelopers: (_: any, { developers }: any) => developers,

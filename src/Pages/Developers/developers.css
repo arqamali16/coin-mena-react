@@ -1,0 +1,38 @@
+.rank-button {
+  color: #8b949e;
+}
+
+.developer-list .ant-list-item-main {
+  display: flex !important;
+}
+
+.developer-list .developer-detail {
+  flex: 1 0 0%;
+}
+
+.f6 {
+  font-size: 12px !important;
+  color: #8b949e !important;
+}
+
+.color-db6d28 {
+  color: #db6d28 !important;
+}
+
+.color-8b949e {
+  color: #8b949e !important;
+}
+
+.sub-header {
+  color: #58a6ff;
+  font-weight: 600 !important;
+  font-size: 16px;
+}
+
+.developer-list .ant-list-vertical .ant-list-item-meta-title {
+  margin-bottom: 1px !important;
+}
+
+.developer-list .ant-list-item-meta-description {
+  font-size: 16px;
+}

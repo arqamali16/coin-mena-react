@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   List,
@@ -10,114 +10,94 @@ import {
   Radio,
   Dropdown,
   Menu,
+  Spin,
+  Button,
 } from "antd";
 import { useValues } from "kea";
 import {
   BookOutlined,
   StarOutlined,
-  ForkOutlined,
+  FireOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 import DevelopersLogic from "../../Redux/developersLogic";
 import _ from "lodash";
 
 const Developers = () => {
-  const { developers } = useValues(DevelopersLogic);
+  const { loading, developers } = useValues(DevelopersLogic);
+  const navigate = useNavigate();
 
-  const IconText = ({ icon, text }: any) => (
-    <Space>
-      {React.createElement(icon)}
-      {text}
-    </Space>
+  const [menuIten, setMenuItem] = useState(
+    _.last(_.split(window.location.href, "/"))
   );
 
-  const menu = (
-    <Menu>
-      <Menu.Item key="1" icon={<UserOutlined />}>
-        1st menu item
-      </Menu.Item>
-      <Menu.Item key="2" icon={<UserOutlined />}>
-        2nd menu item
-      </Menu.Item>
-      <Menu.Item key="3" icon={<UserOutlined />}>
-        3rd menu item
-      </Menu.Item>
-    </Menu>
-  );
+  const onMenuChange = ({ target }: any) => {
+    if (target.value === "developers") navigate("/developers");
+    else navigate("/");
+  };
 
   return (
-    <Row gutter={[24, 24]}>
-      <Col span={24} className="flex-display header">
-        <Typography.Title level={4}>Trending</Typography.Title>
-        <p>See what the GitHub community is most excited about today.</p>
-      </Col>
-      <Col span={24}>
-        <Card
-          className="repo-list"
-          title={
-            <Radio.Group
-              defaultValue="repositories"
-              optionType="button"
-              buttonStyle="solid"
-            >
-              <Radio.Button value="repositories">Repositories</Radio.Button>
-              <Radio.Button value="developer">Developers</Radio.Button>
-            </Radio.Group>
-          }
-        >
-          <List
-            itemLayout="vertical"
-            size="large"
-            dataSource={developers}
-            renderItem={(item: any) => (
-              <List.Item
-                key={item.title}
-                actions={[
-                  <span>{item.language}</span>,
-                  <IconText
-                    icon={StarOutlined}
-                    text={item.totalStars}
-                    key="list-vertical-star-o"
-                  />,
-                  <IconText
-                    icon={ForkOutlined}
-                    text={item.forks}
-                    key="list-vertical-message"
-                  />,
-                  <Space>
-                    <span>built by</span>
-                    {_.map(item.builtBy, (each) => (
-                      <Avatar size="small" src={each.avatar} />
-                    ))}
-                  </Space>,
-                ]}
-                extra={
-                  <Dropdown.Button overlay={menu}>
-                    <StarOutlined />
-                    Star
-                  </Dropdown.Button>
-                }
+    <Spin spinning={loading}>
+      <Row gutter={[24, 24]}>
+        <Col span={24} className="flex-display header">
+          <Typography.Title level={4}>Trending</Typography.Title>
+          <p>See what the GitHub community is most excited about today.</p>
+        </Col>
+        <Col span={24}>
+          <Card
+            className="repo-list developer-list"
+            title={
+              <Radio.Group
+                defaultValue={menuIten}
+                optionType="button"
+                buttonStyle="solid"
+                onChange={onMenuChange}
               >
-                <List.Item.Meta
-                  //   avatar={<BookOutlined className="font-color-8b949e" />}
-                  title={
-                    <Space>
-                      <BookOutlined className="font-color-8b949e" />
-                      <a
-                        href={item.href}
-                      >{`${item.username} / ${item.repositoryName}`}</a>
+                <Radio.Button value="repositories">Repositories</Radio.Button>
+                <Radio.Button value="developers">Developers</Radio.Button>
+              </Radio.Group>
+            }
+          >
+            <List
+              itemLayout="vertical"
+              size="large"
+              dataSource={developers}
+              renderItem={(item: any) => (
+                <List.Item key={item.title} extra={<Button>Follow</Button>}>
+                  <List.Item.Meta
+                    avatar={
+                      <Space size="large">
+                        <span className="rank-button">{item.rank}</span>
+                        <Avatar size="large" src={item.avatar} />
+                      </Space>
+                    }
+                    title={<a href={item.url}>{item.username} </a>}
+                    description={item.name}
+                  />
+                  {
+                    <Space direction="vertical" className="developer-detail">
+                      <Space>
+                        <FireOutlined className="color-db6d28" />
+                        <span className="color-8b949e">POPULAR REPO</span>
+                      </Space>
+                      <Space>
+                        <BookOutlined className="font-color-8b949e" />
+                        <a href={item.href} className="sub-header">
+                          {item.popularRepository.repositoryName}
+                        </a>
+                      </Space>
+                      <p className="f6">{item.popularRepository.description}</p>
                     </Space>
                   }
-                  description={item.description}
-                />
-                {item.content}
-              </List.Item>
-            )}
-          />
-        </Card>
-      </Col>
-    </Row>
+                </List.Item>
+              )}
+            />
+          </Card>
+        </Col>
+      </Row>
+    </Spin>
   );
 };
 

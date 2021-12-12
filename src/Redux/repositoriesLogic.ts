@@ -4,14 +4,6 @@ import { notification } from "antd";
 import { kea } from "kea";
 import axios from "axios";
 
-//@ts-ignore
-import githubTrendsApi from "github-trends-api";
-
-const headers = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, HEAD, OPTIONS",
-};
-
 const ReposetoriesLogic = kea({
   path: () => ["kea", "reposetories"],
 
@@ -44,22 +36,15 @@ const ReposetoriesLogic = kea({
 
   listeners: ({ actions, values }: any) => ({
     loadReposetories: async () => {
-      githubTrendsApi({ section: "developers", since: "weekly" })
-        .then((result: any) => {
-          console.log(result);
-        })
-        .catch((error: any) => {
-          console.log(error);
-        });
-      //   try {
-      //     let res = await axios.get(
-      //       "https://gh-trending-api.herokuapp.com/repositories",
-      //       { headers }
-      //     );
-      //     actions.setReposetories(res);
-      //   } catch (err) {
-      //     actions.setReposetories([]);
-      //   }
+      try {
+        //https://run.mocky.io/v3/ae6e4a8d-d6a9-4da4-b4c9-1dea3ee388cb
+        let { data } = await axios.get(
+          "https://run.mocky.io/v3/0f57d790-7bac-4fe3-9b96-9a8313548515"
+        );
+        actions.setReposetories(data);
+      } catch (err) {
+        actions.setReposetories([]);
+      }
     },
   }),
 });

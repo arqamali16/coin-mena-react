@@ -1,0 +1,60 @@
+.repo-list .ant-card-body {
+  background: #0d1117 !important;
+}
+
+.ant-list-item-meta-title > a {
+  color: #58a6ff !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+}
+
+.ant-list-item-meta-description {
+  color: #8b949e !important;
+}
+
+.ant-list-item-action > li {
+  color: #8b949e !important;
+}
+
+.ant-list-split .ant-list-item {
+  border-bottom: 1px solid #30363d !important;
+}
+
+.font-color-8b949e {
+  color: #8b949e !important;
+}
+
+.flex-display {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.flex-display > * {
+  text-align: center !important;
+}
+
+.ant-card-bordered {
+  border: 0px !important;
+}
+
+.header {
+  background: #161b22 !important;
+  color: #8b949e !important;
+  padding: 1em 0 !important;
+}
+
+h4.ant-typography,
+.ant-typography h4 {
+  color: #c9d1d9 !important;
+}
+
+.ant-card-head {
+  background: #161b22 !important;
+}
+
+.ant-list-item-extra .ant-btn {
+  background: #161b22 !important;
+  border: #161b22 !important;
+  color: #8b949e !important;
+}

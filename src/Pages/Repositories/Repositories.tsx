@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import _ from "lodash";
 import {
   Card,
   List,
@@ -22,7 +23,8 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import ReposetoriesLogic from "../../Redux/repositoriesLogic";
-import _ from "lodash";
+
+import { IRepository } from "../../Types/RepositoriesIntefaces";
 
 const Repositories = () => {
   const { loading, reposetories } = useValues(ReposetoriesLogic);
@@ -86,7 +88,7 @@ const Repositories = () => {
                 itemLayout="vertical"
                 size="large"
                 dataSource={reposetories}
-                renderItem={(item: any) => (
+                renderItem={(item: IRepository) => (
                   <List.Item
                     key={item.title}
                     actions={[
@@ -121,13 +123,12 @@ const Repositories = () => {
                         <Space>
                           <BookOutlined className="font-color-8b949e" />
                           <a
-                            href={item.href}
+                            href={item.url}
                           >{`${item.username} / ${item.repositoryName}`}</a>
                         </Space>
                       }
                       description={item.description}
                     />
-                    {item.content}
                   </List.Item>
                 )}
               />

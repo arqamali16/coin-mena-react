@@ -1,8 +1,8 @@
-import React from "react";
 import _ from "lodash";
-import { notification } from "antd";
 import { kea } from "kea";
 import axios from "axios";
+
+import { IDeveloper } from "../Types/DeveloperInterface";
 
 const DevelopersLogic = kea({
   path: () => ["kea", "developers"],
@@ -14,7 +14,7 @@ const DevelopersLogic = kea({
 
   actions: {
     loadDevelopers: true,
-    setDevelopers: (developers: any) => ({ developers }),
+    setDevelopers: (developers: IDeveloper) => ({ developers }),
   },
 
   events: ({ actions }: any) => ({
@@ -29,7 +29,8 @@ const DevelopersLogic = kea({
     developers: [
       {},
       {
-        setDevelopers: (_: any, { developers }: any) => developers,
+        setDevelopers: (_: any, { developers }: { developers: IDeveloper }) =>
+          developers,
       },
     ],
   },
@@ -37,7 +38,7 @@ const DevelopersLogic = kea({
   listeners: ({ actions, values }: any) => ({
     loadDevelopers: async () => {
       try {
-        //https://run.mocky.io/v3/ae6e4a8d-d6a9-4da4-b4c9-1dea3ee388cb
+        // https://gh-trending-api.herokuapp.com/developers - mocked
         let { data } = await axios.get(
           "https://run.mocky.io/v3/ae6e4a8d-d6a9-4da4-b4c9-1dea3ee388cb"
         );

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import _ from "lodash";
 import {
   Card,
   List,
@@ -8,22 +9,16 @@ import {
   Col,
   Typography,
   Radio,
-  Dropdown,
-  Menu,
   Spin,
   Button,
 } from "antd";
 import { useValues } from "kea";
-import {
-  BookOutlined,
-  StarOutlined,
-  FireOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { BookOutlined, FireOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 import DevelopersLogic from "../../Redux/developersLogic";
-import _ from "lodash";
+
+import { IDeveloper } from "../../Types/DeveloperInterface";
 
 const Developers = () => {
   const { loading, developers } = useValues(DevelopersLogic);
@@ -46,55 +41,59 @@ const Developers = () => {
           <p>See what the GitHub community is most excited about today.</p>
         </Col>
         <Col span={24}>
-          <Card
-            className="repo-list developer-list"
-            title={
-              <Radio.Group
-                defaultValue={menuIten}
-                optionType="button"
-                buttonStyle="solid"
-                onChange={onMenuChange}
-              >
-                <Radio.Button value="repositories">Repositories</Radio.Button>
-                <Radio.Button value="developers">Developers</Radio.Button>
-              </Radio.Group>
-            }
-          >
-            <List
-              itemLayout="vertical"
-              size="large"
-              dataSource={developers}
-              renderItem={(item: any) => (
-                <List.Item key={item.title} extra={<Button>Follow</Button>}>
-                  <List.Item.Meta
-                    avatar={
-                      <Space size="large">
-                        <span className="rank-button">{item.rank}</span>
-                        <Avatar size="large" src={item.avatar} />
+          <div className="list-wrapper">
+            <Card
+              className="repo-list developer-list"
+              title={
+                <Radio.Group
+                  defaultValue={menuIten}
+                  optionType="button"
+                  buttonStyle="solid"
+                  onChange={onMenuChange}
+                >
+                  <Radio.Button value="repositories">Repositories</Radio.Button>
+                  <Radio.Button value="developers">Developers</Radio.Button>
+                </Radio.Group>
+              }
+            >
+              <List
+                itemLayout="vertical"
+                size="large"
+                dataSource={developers}
+                renderItem={(item: IDeveloper) => (
+                  <List.Item key={item.title} extra={<Button>Follow</Button>}>
+                    <List.Item.Meta
+                      avatar={
+                        <Space size="large">
+                          <span className="rank-button">{item.rank}</span>
+                          <Avatar size="large" src={item.avatar} />
+                        </Space>
+                      }
+                      title={<a href={item.url}>{item.username} </a>}
+                      description={item.name}
+                    />
+                    {
+                      <Space direction="vertical" className="developer-detail">
+                        <Space>
+                          <FireOutlined className="color-db6d28" />
+                          <span className="color-8b949e">POPULAR REPO</span>
+                        </Space>
+                        <Space>
+                          <BookOutlined className="font-color-8b949e" />
+                          <a href={item.href} className="sub-header">
+                            {item.popularRepository.repositoryName}
+                          </a>
+                        </Space>
+                        <p className="f6">
+                          {item.popularRepository.description}
+                        </p>
                       </Space>
                     }
-                    title={<a href={item.url}>{item.username} </a>}
-                    description={item.name}
-                  />
-                  {
-                    <Space direction="vertical" className="developer-detail">
-                      <Space>
-                        <FireOutlined className="color-db6d28" />
-                        <span className="color-8b949e">POPULAR REPO</span>
-                      </Space>
-                      <Space>
-                        <BookOutlined className="font-color-8b949e" />
-                        <a href={item.href} className="sub-header">
-                          {item.popularRepository.repositoryName}
-                        </a>
-                      </Space>
-                      <p className="f6">{item.popularRepository.description}</p>
-                    </Space>
-                  }
-                </List.Item>
-              )}
-            />
-          </Card>
+                  </List.Item>
+                )}
+              />
+            </Card>
+          </div>
         </Col>
       </Row>
     </Spin>

@@ -1,8 +1,8 @@
-import React from "react";
 import _ from "lodash";
-import { notification } from "antd";
 import { kea } from "kea";
 import axios from "axios";
+
+import { IRepository } from "../Types/RepositoriesIntefaces";
 
 const ReposetoriesLogic = kea({
   path: () => ["kea", "reposetories"],
@@ -14,7 +14,7 @@ const ReposetoriesLogic = kea({
 
   actions: {
     loadReposetories: true,
-    setReposetories: (repos: any) => ({ repos }),
+    setReposetories: (repos: IRepository) => ({ repos }),
   },
 
   events: ({ actions }: any) => ({
@@ -29,7 +29,7 @@ const ReposetoriesLogic = kea({
     reposetories: [
       {},
       {
-        setReposetories: (_: any, { repos }: any) => repos,
+        setReposetories: (_: any, { repos }: { repos: IRepository }) => repos,
       },
     ],
   },
@@ -37,7 +37,7 @@ const ReposetoriesLogic = kea({
   listeners: ({ actions, values }: any) => ({
     loadReposetories: async () => {
       try {
-        //https://run.mocky.io/v3/ae6e4a8d-d6a9-4da4-b4c9-1dea3ee388cb
+        // https://gh-trending-api.herokuapp.com/repositories - mocked
         let { data } = await axios.get(
           "https://run.mocky.io/v3/0f57d790-7bac-4fe3-9b96-9a8313548515"
         );

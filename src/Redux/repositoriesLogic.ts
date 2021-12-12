@@ -4,7 +4,7 @@ import { notification } from "antd";
 import { kea } from "kea";
 import axios from "axios";
 
-//@ts-ignoregdfgdjfgdfg
+//@ts-ignore
 import githubTrendsApi from "github-trends-api";
 
 const headers = {
